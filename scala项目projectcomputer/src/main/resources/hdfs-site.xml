@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration> 
+        <property>
+		<name>dfs.nameservices</name>
+		<value>mycluster</value>
+        </property>
+        <property>
+		<name>dfs.ha.namenodes.mycluster</name>
+		<value>nn1,nn2</value>
+        </property>
+        <property>
+                <name>dfs.namenode.rpc-address.mycluster.nn1</name>
+                <value>hadoop102:8020</value>
+                <description>指定nn1 NameNode所监听的全限定RPC地址</description>
+        </property>
+        <property>
+                <name>dfs.namenode.rpc-address.mycluster.nn2</name>
+                <value>hadoop103:8020</value>
+                <description>指定nn2 NameNode所监听的全限定RPC地址</description>
+        </property>
+        <property>
+                <name>dfs.namenode.http-address.mycluster.nn1</name>
+                <value>hadoop102:50070</value>
+                <description>指定nn1 NameNode所监听的全限定HTTP地址</description>
+        </property>
+        <property>
+                <name>dfs.namenode.http-address.mycluster.nn2</name>
+                <value>hadoop103:50070</value>
+                <description>指定nn2 NameNode所监听的全限定HTTP地址</description>
+        </property>
+        <property>
+                <name>dfs.namenode.shared.edits.dir</name>
+              <value>qjournal://hadoop102:8485;hadoop103:8485;hadoop104:8485/mycluster</value>
+                <description>指定让NameNodes用来读写edits的Journal Nodes的RUI</description>
+        </property>
+        <property>
+                <name>dfs.ha.fencing.methods</name>
+                <value>sshfence</value>
+                <description>故障转移时使用SSH登录Active NameNode并将其进程杀掉</description>
+        </property>
+        <property>
+                <name>dfs.ha.fencing.ssh.private-key-files</name>
+                <value>/root/.ssh/id_rsa</value>
+                <description>故障转移时SSH登录Active NameNode所使用的私钥文件路径</description>
+        </property>
+	<property>
+                <name>dfs.journalnode.edits.dir</name>
+                <value>/opt/module/hadoop-2.9.2/data/journaldata</value>
+                <description>指定edits在JournalNode 上存储的绝对路径</description>
+	</property>
+	<property>
+		<name>dfs.permissions</name>
+		<value>false</value>
+	</property>
+	<property>
+		<name>dfs.client.failover.proxy.provider.mycluster</name>
+                <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+                <description>指定HDFS客户端联系Active NameNode所使用的Java类</description>
+        </property>
+	<property> 
+		<name>dfs.ha.automatic-failover.enabled.mycluster</name> 
+		<value>true</value> 
+	</property> 
+</configuration>

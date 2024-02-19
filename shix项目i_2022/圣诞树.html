@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="referrer" content="no-referrer" />
+
+    <link rel="stylesheet" href="myStyle.css">
+    <title>圣诞树</title>
+    <style>
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="container"></div>
+
+<div class="middle">
+       <img src="https://docimg4.docs.qq.com/image/AgAABjh6qT0uaKzAAw5MMq5AH78FVz1c.gif" width="auto" height="auto">
+</div>
+
+<script>
+    //重写alert
+    window.alert = alert;
+    function alert(data, callback) { //回调函数
+        var alert_bg = document.createElement('div');
+        alert_box = document.createElement('div'),
+            alert_text = document.createElement('div'),
+            alert_btn = document.createElement('div'),
+            textNode = document.createTextNode(data ? data : ''),
+            input_box = document.createElement('div'),
+            input_text = document.createElement('input'),
+            btnText = document.createTextNode('确 定');
+
+        // 控制样式
+        css(alert_bg, {
+            'position': 'fixed',
+            'top': '0',
+            'left': '0',
+            'right': '0',
+            'bottom': '0',
+            'background-color': 'rgba(0, 0, 0, 0.1)',
+            'z-index': '999999999'
+        });
+
+        css(alert_box, {
+            'width': '380px',
+            'max-width': '90%',
+            'font-size': '1.5rem',
+            'text-align': 'center',
+            'background-color': '#fff',
+            'border-radius': '15px',
+            'position': 'absolute',
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%, -50%)'
+        });
+
+        css(alert_text, {
+            'padding': '10px 15px',
+            'border-bottom': '1px solid #ddd'
+        });
+        css(input_box, {
+            'margin': '10px 0',
+            'width': '100%',
+            'text-align': 'center',
+        });
+        css(input_text, {
+
+            'width': '60%',
+            'height': '20px',
+            'text-align': 'center'
+        })
+        css(alert_btn, {
+            'margin-top': '15px',
+            'padding': '10px 0',
+            'color': '#007aff',
+            'font-weight': '600',
+            'cursor': 'pointer'
+        });
+        input_text.id = "user"
+
+        // 内部结构套入
+        input_box.appendChild(input_text);
+        alert_text.appendChild(textNode);
+        alert_btn.appendChild(btnText);
+        alert_box.appendChild(alert_text);
+        alert_box.appendChild(input_box);
+        alert_box.appendChild(alert_btn);
+        alert_bg.appendChild(alert_box);
+
+        // 整体显示到页面内
+        document.getElementsByTagName('body')[0].appendChild(alert_bg);
+
+        // 确定绑定点击事件删除标签
+        alert_btn.onclick = function () {
+            alert_bg.parentNode.removeChild(alert_bg);
+            if (typeof callback === 'function') {
+                callback(); //回调
+            }
+        }
+    }
+    function css(targetObj, cssObj) {
+        var str = targetObj.getAttribute("style") ? targetObj.getAttribute('style') : '';
+        for (var i in cssObj) {
+            str += i + ':' + cssObj[i] + ';';
+        }
+        targetObj.style.cssText = str;
+    }
+</script>
+
+<script>
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+
+    function addHTML() {
+        var name = input_text.value;
+        var containerDom = document.getElementById("container");
+        var nameStr = "lyy";
+        if (name != "null") {
+            for (let i = 0; i < name.length; i++) {
+                nameStr += "<span>" + name.charAt(i) + "</span>" + "\n";
+            }
+        }
+        nameStr += "        <span>圣</span>        <span>诞</span>        <span>节</span>        <span>快</span>        <span>乐</span>"
+
+        containerDom.innerHTML = nameStr
+    }
+    使用alert
+    alert("请输入您的名字", function () {
+        setTimeout("addHTML()", 500);
+    });
+
+</script>
+</body>
+</html>
